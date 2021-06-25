@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>To-Do Calendar</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.47/css/bootstrap-datetimepicker.css">
+    <link rel="stylesheet" href="css/style.css">
+    
+</head>
+<body>
+
+    <div class="mainCalendar js-mainCalendar">
+        
+            <div class="container mainDatePicker js-mainDatePicker">
+                <div class="input-group date datePicker js-datePicker">
+                    <input type='text' class="form-control js-dateTimePicker dateTimePicker"/>
+                    <span class="js-goToDate goToDate">Idi</span>
+                </div>
+            </div>
+        
+        <div>
+            <a class="prevArrow js-prevArrow"><</a>
+            <a class="nextArrow js-nextArrow">></a>
+        </div>
+        <div class="calendarHeader">
+          <div class="js-monthDisplay"></div>
+        </div>
+        <div class="weekdays js-weekdays">
+          <div>Sun</div>
+          <div>Mon</div>
+          <div>Tue</div>
+          <div>Wed</div>
+          <div>Thu</div>
+          <div>Fri</div>
+          <div>Sat</div>
+        </div>
+        <div class="calendar js-calendar"></div>
+      </div>
+  
+      <div class="newEventModal js-newEventModal">
+        <h2>Novi Dogadjaj</h2>
+        <h3 class="eventTitle">Naslov</h3>
+        <input class="eventTitleInput js-eventTitleInput" placeholder="" />
+        <h3 class="eventTitle">Pocetni datum</h3>
+        <input class="eventTitleInput js-eventTimePicker dateTimePicker" placeholder="" />
+        <h3 class="eventTitle">Zavrsni Datum</h3>
+        <input class="eventTitleInput js-eventTimePicker dateTimePicker" placeholder="" />
+        <button class="saveButton js-saveButton">Sacuvaj</button>
+        <a class="cancelButton js-cancelButton">X</a>
+    </div>  
+
+      <div class="editEventModal js-editEventModal">
+        <h2>Uredi Dogadjaj</h2>
+        <h3 class="eventTitle">Naslov</h3>
+        <input class="eventTitleInput js-eventTitleInput" placeholder="" />
+        <h3 class="eventTitle">Pocetni datum</h3>
+        <input class="eventTitleInput js-eventTimePicker dateTimePicker" placeholder="" />
+        <h3 class="eventTitle">Zavrsni Datum</h3>
+        <input class="eventTitleInput js-eventTimePicker dateTimePicker" placeholder="" />
+        <button class="editButton js-editButton">Sacuvaj</button>
+        <a class="closeButton js-closeButton">X</a>
+      </div>
+       
+      <div class="modalShadow js-modalShadow"></div>
+
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.9.2/umd/popper.min.js"></script>
+      <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+      <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.47/js/bootstrap-datetimepicker.min.js"></script>
+      <script src="js/app.js"></script>
+</body>
+</html>

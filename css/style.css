@@ -1,0 +1,267 @@
+* {
+  padding: 0;
+  margin: 0;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+}
+body {
+  background: #46bfea;
+  font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+}
+a {
+  text-decoration: none;
+}
+body {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  margin-top: 50px;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+}
+.mainCalendar {
+  width: 1000px;
+  position: relative;
+}
+.mainCalendar .mainDatePicker {
+  width: 350px;
+}
+.mainCalendar .mainDatePicker .datePicker {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+}
+.mainCalendar .mainDatePicker .datePicker .dateTimePicker {
+  font-weight: bold;
+  background: #46bfea;
+  border: 1px solid #0e0c0c;
+  color: #fff;
+}
+.mainCalendar .mainDatePicker .datePicker .goToDate {
+  margin: 0 0 0 20px;
+  padding: 0 10px;
+  color: #46bfea;
+  font-weight: bold;
+  font-size: 20px;
+  border: 1px solid #fff;
+  background: #fff;
+  cursor: pointer;
+}
+.mainCalendar .calendarHeader {
+  padding: 10px;
+  color: #0e0c0c;
+  font-size: 62px;
+  text-align: center;
+  font-family: sans-serif;
+  font-weight: bold;
+  border: 1px solid #0e0c0c;
+}
+.mainCalendar .nextArrow {
+  cursor: pointer;
+  color: #0e0c0c;
+  font-size: 50px;
+  position: absolute;
+  right: 0;
+  font-weight: bold;
+  text-decoration: none;
+}
+.mainCalendar .prevArrow {
+  cursor: pointer;
+  color: #0e0c0c;
+  font-size: 50px;
+  font-weight: bold;
+  text-decoration: none;
+}
+.mainCalendar .weekdays {
+  width: 100%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  color: #0e0c0c;
+}
+.mainCalendar .weekdays div {
+  padding: 10px;
+  width: 14.28571429%;
+  border: 1px solid #0e0c0c;
+}
+.mainCalendar .calendar {
+  width: 100%;
+  margin: auto;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
+}
+.mainCalendar .calendar .day {
+  width: 14.28571429%;
+  padding: 10px;
+  height: 150px;
+  border: 1px solid #0e0c0c;
+  position: relative;
+  font-size: 20px;
+}
+.mainCalendar .calendar .day.active .dayIndex {
+  border: 2px solid red;
+  border-radius: 50%;
+  padding: 5px;
+  background: red;
+}
+.mainCalendar .calendar .day .dayIndex {
+  display: inline-block;
+}
+.mainCalendar .calendar .day .addEvent {
+  font-size: 30px;
+  font-weight: bold;
+  border: 1px solid #0e0c0c;
+  position: absolute;
+  padding: 5px 15px;
+  border-radius: 50%;
+  cursor: pointer;
+  color: #fff;
+  background: #0e0c0c;
+  display: none;
+}
+.mainCalendar .calendar .day .addEvent.active {
+  display: block;
+}
+.mainCalendar .calendar .currentDay .dayIndex {
+  border: 2px solid red;
+  border-radius: 50%;
+  padding: 5px;
+}
+.event {
+  font-size: 20px;
+  padding-left: 8px;
+  color: #fff;
+  max-height: 55px;
+  overflow: hidden;
+  border-left: 4px solid red;
+}
+.eventTimeLeft {
+  font-size: 20px;
+  padding: 3px;
+  color: #fff;
+  max-height: 55px;
+  overflow: hidden;
+}
+.newEventModal {
+  display: none;
+  z-index: 20;
+  padding: 25px;
+  background-color: #fff;
+  color: #46bfea;
+  -webkit-box-shadow: 0px 0px 3px black;
+          box-shadow: 0px 0px 3px black;
+  width: 350px;
+  top: 200px;
+  left: calc(50% - 175px);
+  position: absolute;
+  font-family: sans-serif;
+}
+.newEventModal h2 {
+  font-size: 30px;
+}
+.newEventModal.active {
+  display: block;
+}
+.newEventModal .eventTitle {
+  padding: 10px 0;
+}
+.newEventModal .eventTitleInput {
+  padding: 10px;
+  width: 100%;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+  border-radius: 0;
+  margin-bottom: 25px;
+  color: #46bfea;
+  font-weight: bold;
+  outline: none;
+  border: none;
+  -webkit-box-shadow: 0px 0px 3px gray;
+          box-shadow: 0px 0px 3px gray;
+  font-size: 20px;
+}
+.newEventModal .eventTitleInput.error {
+  border: 2px solid red;
+}
+.newEventModal .saveButton {
+  padding: 10px 30px;
+  font-size: 20px;
+  border-radius: 0;
+  color: #fff;
+  border: none;
+  font-weight: bold;
+  background: #46bfea;
+  cursor: pointer;
+}
+.editEventModal {
+  display: none;
+  z-index: 20;
+  padding: 25px;
+  background-color: #fff;
+  color: #46bfea;
+  -webkit-box-shadow: 0px 0px 3px black;
+          box-shadow: 0px 0px 3px black;
+  width: 350px;
+  top: 200px;
+  left: calc(50% - 175px);
+  position: absolute;
+  font-family: sans-serif;
+}
+.editEventModal.active {
+  display: block;
+}
+.editEventModal .eventTitleInput {
+  padding: 10px;
+  width: 100%;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+  border-radius: 0;
+  margin-bottom: 25px;
+  color: #46bfea;
+  font-weight: bold;
+  outline: none;
+  border: none;
+  -webkit-box-shadow: 0px 0px 3px gray;
+          box-shadow: 0px 0px 3px gray;
+  font-size: 20px;
+}
+.editEventModal .eventText {
+  font-size: 14px;
+}
+.editEventModal .editButton {
+  padding: 10px 30px;
+  font-size: 20px;
+  border-radius: 0;
+  color: #fff;
+  border: none;
+  font-weight: bold;
+  background: #46bfea;
+  cursor: pointer;
+}
+.closeButton,
+.cancelButton {
+  font-size: 30px;
+  font-weight: bold;
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  cursor: pointer;
+  text-decoration: none !important;
+}
+.modalShadow {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  z-index: 2;
+  display: none;
+  background: rgba(0, 0, 0, 0.45);
+}
+.modalShadow.active {
+  display: block;
+}

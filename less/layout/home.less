@@ -1,0 +1,276 @@
+body {
+    display: flex;
+    margin-top: 50px;
+    justify-content: center;
+  }
+
+  .mainCalendar {
+    width: 1000px;
+    position: relative;
+
+    .mainDatePicker {
+        width: 350px;
+
+        .datePicker {
+           display: flex;
+       
+        .dateTimePicker {
+            font-weight: bold;
+            background: @blue;
+            border: 1px solid @black;
+            color: @white;
+        }
+
+        .goToDate {
+            margin: 0 0 0 20px;
+            padding: 0 10px;
+            color: @blue;
+            font-weight: bold;
+            font-size: 20px;
+            border: 1px solid @white;
+            background: @white;
+            cursor: pointer;
+        }
+        }
+    }
+
+    .calendarHeader {
+        padding: 10px;
+        color: @black;
+        font-size: 62px;
+        text-align: center;
+        font-family: sans-serif;
+        font-weight: bold;
+        border: 1px solid @black;
+      }    
+
+    .nextArrow{
+        cursor: pointer;
+        color: @black;
+        font-size: 50px;
+        position: absolute;
+        right: 0;
+        font-weight: bold;
+        text-decoration: none;
+      }
+
+    .prevArrow {
+        cursor: pointer;
+        color: @black;
+        font-size: 50px;
+        font-weight: bold;
+        text-decoration: none;
+    }
+
+    .weekdays {
+        width: 100%;
+        display: flex;
+        color: @black;
+
+        div {
+            padding: 10px;
+            width: 100% / 7;
+            border: 1px solid @black;
+        }
+      }
+
+      .calendar {
+        width: 100%;
+        margin: auto;
+        display: flex;
+        flex-wrap: wrap;
+
+        .day {
+            width: 100% / 7;
+            padding: 10px;
+            height: 150px;
+            border: 1px solid @black;
+            position: relative;
+            font-size: 20px;
+
+            &.active {
+                .dayIndex {
+                border: 2px solid red;
+                border-radius: 50%;
+                padding: 5px;
+                background: red;
+                }
+            }
+
+            .dayIndex {
+                display: inline-block;
+            }
+
+            .addEvent {
+                font-size: 30px;
+                font-weight: bold;
+                border: 1px solid @black;
+                position: absolute;
+                padding: 5px 15px;
+                border-radius: 50%;
+                cursor: pointer;
+                color: @white;
+                background: @black;
+                display: none;
+
+                &.active {
+                    display: block;
+                }
+            }
+        }
+
+        .currentDay {
+
+            .dayIndex {
+                border: 2px solid red;
+                border-radius: 50%;
+                padding: 5px;
+            }
+        }
+      }
+  }
+
+  .event {
+    font-size: 20px;
+    padding-left: 8px;
+    color: @white;
+    max-height: 55px;
+    overflow: hidden;
+    border-left: 4px solid red;
+  }
+
+  .eventTimeLeft {
+    font-size: 20px;
+    padding: 3px;
+    color: @white;
+    max-height: 55px;
+    overflow: hidden;
+  }
+  
+  .newEventModal{
+    display: none;
+    z-index: 20;
+    padding: 25px;
+    background-color: @white;
+    color: @blue;
+    box-shadow: 0px 0px 3px black;
+    width: 350px;
+    top: 200px;
+    left: calc(50% - 175px);
+    position: absolute;
+    font-family: sans-serif;
+
+    h2 {
+        font-size: 30px;
+    }
+
+    &.active {
+        display: block;
+    }
+
+    .eventTitle {
+        padding: 10px 0;
+    }
+
+    .eventTitleInput {
+        padding: 10px;
+        width: 100%;
+        box-sizing: border-box;
+        border-radius: 0;
+        margin-bottom: 25px;
+        color: @blue;
+        font-weight: bold;
+        outline: none;
+        border: none;
+        box-shadow: 0px 0px 3px gray;
+        font-size: 20px;
+
+        &.error {
+            border: 2px solid red;
+        }
+      }
+
+    .saveButton {
+        padding: 10px 30px;
+        font-size: 20px;
+        border-radius: 0;
+        color: @white;
+        border: none;
+        font-weight: bold;
+        background: @blue;
+        cursor: pointer;
+    }   
+  }
+
+  .editEventModal {
+    display: none;
+    z-index: 20;
+    padding: 25px;
+    background-color: @white;
+    color: @blue;
+    box-shadow: 0px 0px 3px black;
+    width: 350px;
+    top: 200px;
+    left: calc(50% - 175px);
+    position: absolute;
+    font-family: sans-serif;
+
+    &.active {
+        display: block;
+    }
+
+    .eventTitleInput {
+        padding: 10px;
+        width: 100%;
+        box-sizing: border-box;
+        border-radius: 0;
+        margin-bottom: 25px;
+        color: @blue;
+        font-weight: bold;
+        outline: none;
+        border: none;
+        box-shadow: 0px 0px 3px gray;
+        font-size: 20px;
+    }
+
+    .eventText {
+        font-size: 14px;
+    }
+
+    .editButton {
+        padding: 10px 30px;
+        font-size: 20px;
+        border-radius: 0;
+        color: @white;
+        border: none;
+        font-weight: bold;
+        background: @blue;
+        cursor: pointer;
+    }
+  }
+
+.closeButton, .cancelButton {
+    font-size: 30px;
+    font-weight: bold;
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    cursor: pointer;
+    text-decoration: none !important;
+}
+ 
+.modalShadow {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    z-index: 2;
+    display: none;
+    background: rgba(0,0,0,0.45);
+
+    &.active {
+        display: block;
+    }
+}
+  
