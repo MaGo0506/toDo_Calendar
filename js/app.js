@@ -60,8 +60,6 @@ function load() {
 
   calendar.innerHTML = '';
 
-
-
   for(let i = 1; i <= paddingDays + daysInMonth; i++) {
     const daySquare = document.createElement('div');
     const addEvent = document.createElement('div');
@@ -133,7 +131,7 @@ function closeModal() {
   load();
 }
 
-function saveEvent() {
+function saveEvent(e) {
   if (eventTitleInput.value) {
     eventTitleInput.classList.remove('error');
 
@@ -151,6 +149,10 @@ function saveEvent() {
       title: eventTitleInput.value,
     });
 
+    const newInput = newEventModal.getElementsByTagName('input');
+    newInput[0].value = eventTitleInput.value;
+    console.log(newInput[0].value);
+
     localStorage.setItem('events', JSON.stringify(events));
     closeModal();
     
@@ -159,21 +161,36 @@ function saveEvent() {
   }
 }
 
-function editEvent() {
-  events = events.filter(e => e.date == clicked);
-  console.log(events);
-  const dateStart = new Date(eventTimePicker[0].value),
+function editEvent(e) {
+  if (eventTitleInput.value) {
+    eventTitleInput.classList.remove('error');
+
+    const dateStart = new Date(eventTimePicker[0].value),
           dateEnd = new Date(eventTimePicker[1].value),
           diffTime = Math.abs(dateStart - dateEnd),
           diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24)), 
           timeLeft = `Za ${diffDays} dana`;
+
+    events.splice(e.target, 4);
+   
+    events.push({
+      date: clicked,
+      timeLeft: timeLeft,
+      dateStart: eventTimePicker[0].value,
+      dateEnd: eventTimePicker[1].value,
+      title: eventTitleInput.value,
+    });
+
+    const newInput = newEventModal.getElementsByTagName('input');
+    newInput[0].value = eventTitleInput.value;
+    console.log(newInput[0].value);
+
+    localStorage.setItem('events', JSON.stringify(events));
+    closeModal();
     
-         
-  const editInput = editEventModal.getElementsByTagName('input');
-  console.log(editInput[0].value);
-  
-  localStorage.setItem('events', JSON.stringify(events));
-  closeModal();
+  } else {
+    eventTitleInput.classList.add('error');
+  }
 }
 
 function initButtons() {
