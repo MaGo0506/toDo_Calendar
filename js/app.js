@@ -11,27 +11,38 @@ const calendar = document.querySelector('.js-calendar'),
       eventTimePicker = document.querySelectorAll('.js-eventTimePicker'),
       weekdays = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
 
+/**
+  * Calling the datepicker plugin
+  */
 $(function() {
     $('.dateTimePicker').datetimepicker();
 });
 
 console.log(events);
 
+/**
+  * function for opening specific modals for the date we click
+  * @param date - the specific date we click
+  */
 function openModal(date) {
   clicked = date;
 
   const eventForDay = events.find(e => e.date === clicked);
 
   if (eventForDay) {
-    document.querySelector('.js-eventTitleInput').innerText = eventForDay.title;
-    editEventModal.classList.add('active');
-  } else {
-    newEventModal.classList.add('active');
+    if (eventTitleInput && editEventModal) {
+      eventTitleInput.innerText = eventForDay.title;
+      editEventModal.classList.add('active');
+    } 
+  } else if (newEventModal) {
+      newEventModal.classList.add('active');
   }
   modalShadow.classList.add('active');
 }
 
-
+/**
+  * In this function we are creating the calendar and giving it padding days
+  */
 function load() {
   let dt = new Date();
 
@@ -101,13 +112,20 @@ function load() {
         daySquare.appendChild(eventDiv);
       }
 
-      addEvent.addEventListener('click', () => openModal(dayString));
+      if (addEvent) {
+        addEvent.addEventListener('click', () => openModal(dayString));
+      }     
     }
-
-    calendar.appendChild(daySquare);  
+    if (calendar) {
+      calendar.appendChild(daySquare);  
+    }
   }
 }
 
+/**
+  * When we pick a specific date in the datepicker and click idi it sends us to,
+  * the specific date on the calendar
+  */
 function goToDate () {
   document.querySelector('.js-goToDate').addEventListener('click', (e) => {
         let dt = new Date(),
@@ -121,16 +139,26 @@ function goToDate () {
   })
 }
 
+/**
+  * On click we are closing the modal
+  */
 function closeModal() {
-  eventTitleInput.classList.remove('error');
-  newEventModal.classList.remove('active');
-  editEventModal.classList.remove('active');
-  modalShadow.classList.remove('active');
+  if (eventTitleInput && newEventModal) {
+    eventTitleInput.classList.remove('error');
+    newEventModal.classList.remove('active');
+  }
+  if (editEventModal && modalShadow) {
+    editEventModal.classList.remove('active');
+    modalShadow.classList.remove('active');
+  } 
   eventTitleInput.value = '';
   clicked = null;
   load();
 }
 
+/**
+  * Here we are creating a new event that has a title and time left for the task we have to do
+  */
 function saveEvent(e) {
   if (eventTitleInput.value) {
     eventTitleInput.classList.remove('error');
@@ -161,6 +189,9 @@ function saveEvent(e) {
   }
 }
 
+/**
+  * Here we are editing the created event
+  */
 function editEvent(e) {
   if (eventTitleInput.value) {
     eventTitleInput.classList.remove('error');
@@ -193,6 +224,9 @@ function editEvent(e) {
   }
 }
 
+/**
+  * We are adding functionaliti to the arrow buttons to toggle between months
+  */
 function initButtons() {
   document.querySelector('.js-nextArrow').addEventListener('click', () => {
     nav++;
