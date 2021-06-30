@@ -8,7 +8,8 @@
     newEventModal = document.querySelector('.js-newEventModal'),
     editEventModal = document.querySelector('.js-editEventModal'),
     modalShadow = document.querySelector('.js-modalShadow'),
-    eventTitleInput = document.querySelectorAll('.js-eventTitleInput'),
+    eventTitleInput = document.querySelector('.js-eventTitleInput'),
+    editEventTitleInput = document.querySelector('.js-editEventTitleInput'),
     dateTimePicker = document.querySelector('.js-dateTimePicker'),
     eventTimePicker = document.querySelectorAll('.js-eventTimePicker'),
     weekdays = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'],
@@ -33,12 +34,12 @@
     const eventForDay = events.find((e) => e.date === clicked);
 
     if (eventForDay) {
-      if (eventTitleInput[1] && editEventModal) {
+      if (editEventTitleInput && editEventModal) {
         const newInput = editEventModal.getElementsByTagName('input');
         newInput[0].value = eventForDay.title;
         newInput[1].value = eventForDay.dateStart;
         newInput[2].value = eventForDay.dateEnd;
-        eventTitleInput[1].innerText = eventForDay.title;
+        editEventTitleInput.innerText = eventForDay.title;
         editEventModal.classList.add('active');
       }
     } else if (newEventModal) {
@@ -162,7 +163,7 @@
       modalShadow.classList.remove('active');
     }
     // eventTitleInput[0].value = '';
-    eventTitleInput[1].value = '';
+    editEventTitleInput.value = '';
     clicked = null;
     load();
   }
@@ -209,11 +210,11 @@
       timeLeft,
       dateStart: eventTimePicker[2].value,
       dateEnd: eventTimePicker[3].value,
-      title: eventTitleInput[1].value,
+      title: editEventTitleInput.value,
     });
 
     const eventDiv = document.querySelector('.event');
-    eventDiv.innerHTML = eventTitleInput[1].value;
+    eventDiv.innerHTML = editEventTitleInput.value;
     console.log(eventDiv);
 
     localStorage.setItem('events', JSON.stringify(events));
