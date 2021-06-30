@@ -198,32 +198,26 @@
     * Here we are editing the created event
     */
   function editEvent() {
-    if (eventTitleInput[1].value) {
-      eventTitleInput[1].classList.remove('error');
+    const dateStart = new Date(eventTimePicker[2].value),
+      dateEnd = new Date(eventTimePicker[3].value),
+      diffTime = Math.abs(dateStart - dateEnd),
+      diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24)),
+      timeLeft = `Za ${diffDays} dana`;
 
-      const dateStart = new Date(eventTimePicker[2].value),
-        dateEnd = new Date(eventTimePicker[3].value),
-        diffTime = Math.abs(dateStart - dateEnd),
-        diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24)),
-        timeLeft = `Za ${diffDays} dana`;
+    events.push({
+      date: clicked,
+      timeLeft,
+      dateStart: eventTimePicker[2].value,
+      dateEnd: eventTimePicker[3].value,
+      title: eventTitleInput[1].value,
+    });
 
-      events.push({
-        date: clicked,
-        timeLeft,
-        dateStart: eventTimePicker[2].value,
-        dateEnd: eventTimePicker[3].value,
-        title: eventTitleInput[1].value,
-      });
+    const eventDiv = document.querySelector('.event');
+    eventDiv.innerHTML = eventTitleInput[1].value;
+    console.log(eventDiv);
 
-      const eventDiv = document.querySelector('.event');
-      eventDiv.innerHTML = eventTitleInput[1].value;
-      console.log(eventDiv);
-
-      localStorage.setItem('events', JSON.stringify(events));
-      closeModal();
-    } else {
-      eventTitleInput[1].classList.add('error');
-    }
+    localStorage.setItem('events', JSON.stringify(events));
+    closeModal();
   }
 
   /**
@@ -247,8 +241,8 @@
     document.querySelector('.js-closeButton').addEventListener('click', closeModal);
   }
 
-  editEvent();
   initButtons();
   load();
+  editEvent();
   goToDate();
 }());
