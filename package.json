@@ -1,0 +1,26 @@
+{
+  "name": "todo_calendar",
+  "version": "1.0.0",
+  "description": "To Do calendar With events",
+  "main": ".npm-init.js",
+  "dependencies": {},
+  "devDependencies": {
+    "eslint": "^7.29.0",
+    "eslint-config-airbnb-base": "^14.2.1",
+    "eslint-plugin-import": "^2.23.4"
+  },
+  "scripts": {
+    "test": "npm test",
+    "lint": "eslint ./"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/MaGo0506/toDo_Calendar.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/MaGo0506/toDo_Calendar/issues"
+  },
+  "homepage": "https://github.com/MaGo0506/toDo_Calendar#readme"
+}

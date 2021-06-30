@@ -102,6 +102,9 @@ body {
   position: relative;
   font-size: 20px;
 }
+.mainCalendar .calendar .day.active {
+  cursor: pointer;
+}
 .mainCalendar .calendar .day.active .dayIndex {
   border: 2px solid red;
   border-radius: 50%;
