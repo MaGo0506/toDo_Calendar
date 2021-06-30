@@ -3,6 +3,7 @@
 /* eslint-disable one-var */
   let nav = 0,
     clicked = null;
+
   const calendar = document.querySelector('.js-calendar'),
     newEventModal = document.querySelector('.js-newEventModal'),
     editEventModal = document.querySelector('.js-editEventModal'),
@@ -19,6 +20,8 @@
   $(() => {
     $('.dateTimePicker').datetimepicker();
   });
+
+  console.log(events);
 
   /**
   * function for opening specific modals for the date we click
@@ -109,13 +112,10 @@
           const timeDiv = document.createElement('div');
           eventDiv.classList.add('event');
           timeDiv.classList.add('eventTimeLeft');
-          if (eventDiv.innerHTML === '') {
-            eventDiv.innerHTML = eventForDay.title;
-            timeDiv.innerHTML = eventForDay.timeLeft;
-          } else {
-            const newInput = editEventModal.getElementsByTagName('input');
-            eventDiv.innerHTML = newInput[0].value;
-          }
+
+          eventDiv.innerHTML = eventForDay.title;
+          timeDiv.innerHTML = eventForDay.timeLeft;
+
           daySquare.appendChild(timeDiv);
           daySquare.appendChild(eventDiv);
         }
@@ -194,7 +194,6 @@
       eventTitleInput[0].classList.add('error');
     }
   }
-
   /**
     * Here we are editing the created event
     */
@@ -218,6 +217,7 @@
 
       const eventDiv = document.querySelector('.event');
       eventDiv.innerHTML = eventTitleInput[1].value;
+      console.log(eventDiv);
 
       localStorage.setItem('events', JSON.stringify(events));
       closeModal();
@@ -247,6 +247,7 @@
     document.querySelector('.js-closeButton').addEventListener('click', closeModal);
   }
 
+  editEvent();
   initButtons();
   load();
   goToDate();
