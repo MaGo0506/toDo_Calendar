@@ -2,7 +2,8 @@
   /* eslint-disable no-undef */
 /* eslint-disable one-var */
   let nav = 0,
-    clicked = null;
+    clicked = null,
+    events = localStorage.getItem('events') ? JSON.parse(localStorage.getItem('events')) : [];
 
   const calendar = document.querySelector('.js-calendar'),
     newEventModal = document.querySelector('.js-newEventModal'),
@@ -12,8 +13,7 @@
     editEventTitleInput = document.querySelector('.js-editEventTitleInput'),
     dateTimePicker = document.querySelector('.js-dateTimePicker'),
     eventTimePicker = document.querySelectorAll('.js-eventTimePicker'),
-    weekdays = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'],
-    events = localStorage.getItem('events') ? JSON.parse(localStorage.getItem('events')) : [];
+    weekdays = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
 
   /**
   * Calling the datepicker plugin
@@ -22,10 +22,9 @@
     $('.dateTimePicker').datetimepicker();
   });
 
-  console.log(events);
-
   /**
-  * function for opening specific modals for the date we click
+  * function for opening specific modals for the date we click,
+  * and adding text with the event title and days left
   * @param date - the specific date we click
   */
   function openModal(date) {
@@ -42,15 +41,15 @@
         editEventTitleInput.innerText = eventForDay.title;
         editEventModal.classList.add('active');
       }
-    } else if (newEventModal) {
+    } else if (newEventModal && modalShadow) {
       newEventModal.classList.add('active');
+      modalShadow.classList.add('active');
     }
-    modalShadow.classList.add('active');
   }
 
   /**
-  * In this function we are creating the calendar and giving it padding days
-  * Creating the addEvent button and adding text with the event title and days left
+  * In this function we are generating a calendar and giving it padding days
+  * Creating the addEvent button
   */
   function load() {
     const dt = new Date();
@@ -79,8 +78,9 @@
     calendar.innerHTML = '';
 
     for (let i = 1; i <= paddingDays + daysInMonth; i += 1) {
-      const daySquare = document.createElement('div');
-      const addEvent = document.createElement('div');
+      const daySquare = document.createElement('div'),
+        addEvent = document.createElement('div');
+
       daySquare.classList.add('day');
       addEvent.classList.add('addEvent');
       addEvent.innerHTML = '+';
@@ -109,16 +109,21 @@
         });
         if (eventForDay) {
           daySquare.classList.add('active');
-          const eventDiv = document.createElement('div');
-          const timeDiv = document.createElement('div');
+          const eventDiv = document.createElement('div'),
+            timeDiv = document.createElement('div');
+
           eventDiv.classList.add('event');
           timeDiv.classList.add('eventTimeLeft');
 
-          eventDiv.innerHTML = eventForDay.title;
-          timeDiv.innerHTML = eventForDay.timeLeft;
+          if (eventDiv && timeDiv) {
+            eventDiv.innerHTML = eventForDay.title;
+            timeDiv.innerHTML = eventForDay.timeLeft;
+          }
 
-          daySquare.appendChild(timeDiv);
-          daySquare.appendChild(eventDiv);
+          if (daySquare) {
+            daySquare.appendChild(timeDiv);
+            daySquare.appendChild(eventDiv);
+          }
         }
 
         if (addEvent) {
@@ -140,11 +145,12 @@
   function goToDate() {
     document.querySelector('.js-goToDate').addEventListener('click', () => {
       const dt = new Date(),
-        targetDate = new Date(dateTimePicker.value);
-      const month = dt.getMonth(),
+        targetDate = new Date(dateTimePicker.value),
+        month = dt.getMonth(),
         year = dt.getFullYear(),
         targetMonth = targetDate.getMonth(),
         targetYear = targetDate.getFullYear();
+
       nav = (targetMonth - month) - ((year - targetYear) * 12);
       load();
     });
@@ -154,16 +160,16 @@
   * On click we are closing the modal
   */
   function closeModal() {
-    if (eventTitleInput[0] && newEventModal) {
-      eventTitleInput[0].classList.remove('error');
+    if (eventTitleInput && newEventModal) {
+      eventTitleInput.classList.remove('error');
       newEventModal.classList.remove('active');
     }
     if (editEventModal && modalShadow) {
       editEventModal.classList.remove('active');
       modalShadow.classList.remove('active');
     }
-    // eventTitleInput[0].value = '';
     editEventTitleInput.value = '';
+    eventTitleInput.value = '';
     clicked = null;
     load();
   }
@@ -172,8 +178,8 @@
   * Here we are creating a new event that has a title and time left for the task we have to do
   */
   function saveEvent() {
-    if (eventTitleInput[0].value) {
-      eventTitleInput[0].classList.remove('error');
+    if (eventTitleInput.value) {
+      eventTitleInput.classList.remove('error');
 
       const dateStart = new Date(eventTimePicker[0].value),
         dateEnd = new Date(eventTimePicker[1].value),
@@ -182,19 +188,21 @@
         timeLeft = `Za ${diffDays} dana`;
 
       events.push({
+        id: events.length + 1,
         date: clicked,
-        timeLeft,
+        title: eventTitleInput.value,
         dateStart: eventTimePicker[0].value,
         dateEnd: eventTimePicker[1].value,
-        title: eventTitleInput[0].value,
+        timeLeft,
       });
 
       localStorage.setItem('events', JSON.stringify(events));
       closeModal();
     } else {
-      eventTitleInput[0].classList.add('error');
+      eventTitleInput.classList.add('error');
     }
   }
+
   /**
     * Here we are editing the created event
     */
@@ -206,19 +214,22 @@
       timeLeft = `Za ${diffDays} dana`;
 
     events.push({
+      id: events.length + 1,
       date: clicked,
-      timeLeft,
       dateStart: eventTimePicker[2].value,
       dateEnd: eventTimePicker[3].value,
       title: editEventTitleInput.value,
+      timeLeft,
     });
 
-    const eventDiv = document.querySelector('.event');
-    eventDiv.innerHTML = editEventTitleInput.value;
-    console.log(eventDiv);
+    events = events.filter((e) => e.date === clicked);
+    if (events.length > 1) {
+      events.splice(0, 1);
+    }
 
     localStorage.setItem('events', JSON.stringify(events));
     closeModal();
+    load();
   }
 
   /**
@@ -244,6 +255,5 @@
 
   initButtons();
   load();
-  editEvent();
   goToDate();
 }());
